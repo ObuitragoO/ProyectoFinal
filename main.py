@@ -11,9 +11,35 @@ app = Flask(__name__)
 cors = CORS(app)
 
 ControladorMesa = ControladorMesa()
-ControladorCandidato = ControladorCandidato()
+"""ControladorCandidato = ControladorCandidato()"""
 
 
+@app.route("/mesas",methods=['GET'])
+
+def getMesa():
+    json=ControladorMesa.index()
+    return jsonify(json)
+@app.route("/mesas",methods=['POST'])
+
+def crearMesa():
+    data = request.get_json()
+    json=ControladorMesa.create(data)
+    return jsonify(json)
+@app.route("/mesas/<string:id>",methods=['GET'])
+def traerMesa(id):
+    json=ControladorMesa.show(id)
+    return jsonify(json)
+@app.route("/estudiantes/<string:id>",methods=['PUT'])
+
+def modificarMesa(id):
+    data = request.get_json()
+    json=ControladorMesa.update(id,data)
+    return jsonify(json)
+@app.route("/estudiantes/<string:id>",methods=['DELETE'])
+def eliminarMesa(id):
+    json=ControladorMesa.delete(id)
+    return jsonify(json)
+"""
 @app.route("/saludo/",methods=['POST'])
 
 def creacionMesa():
@@ -32,7 +58,7 @@ def creacionCandidato():
     resultado = ControladorCandidato.creacionCandidato()
     return {"resultado":resultado}
 
-
+"""
 
 def loadFileConfig():
     with open('config.json') as f:
