@@ -5,12 +5,32 @@ from flask_cors import CORS
 import json
 from waitress import serve
 
-
+from Controladores.ControladorMesa import ControladorMesa
+from Controladores.ControladorCandidato import ControladorCandidato
 app = Flask(__name__)
 cors = CORS(app)
 
+ControladorMesa = ControladorMesa()
+ControladorCandidato = ControladorCandidato()
+
+
 @app.route("/saludo/",methods=['POST'])
 
+def creacionMesa():
+    getJsonO = request.get_json()
+    print("el Body ",getJsonO)
+    hostJson = request.host
+    resultado = ControladorMesa.crearMesa()
+    if(resultado):
+        return {"resultado":"La Mesa se creo ok "}
+    else:
+        return {"resultado":"fallo"}
+
+@app.route("/dos/",methods=['POST'])
+
+def creacionCandidato():
+    resultado = ControladorCandidato.creacionCandidato()
+    return {"resultado":resultado}
 
 
 
