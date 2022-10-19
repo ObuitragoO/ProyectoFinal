@@ -12,7 +12,7 @@ cors = CORS(app)
 
 ControladorMesa = ControladorMesa()
 """ControladorCandidato = ControladorCandidato()"""
-
+"""test"""
 
 @app.route("/mesas",methods=['GET'])
 
