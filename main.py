@@ -7,6 +7,7 @@ from waitress import serve
 
 from Controladores.ControladorMesa import ControladorMesa
 from Controladores.ControladorCandidato import ControladorCandidato
+
 app = Flask(__name__)
 cors = CORS(app)
 
@@ -19,6 +20,7 @@ ControladorMesa = ControladorMesa()
 def getMesa():
     json=ControladorMesa.index()
     return jsonify(json)
+
 @app.route("/mesas",methods=['POST'])
 
 def crearMesa():
@@ -29,7 +31,7 @@ def crearMesa():
 def traerMesa(id):
     json=ControladorMesa.show(id)
     return jsonify(json)
-@app.route("/estudiantes/<string:id>",methods=['PUT'])
+@app.route("/mesas/<string:id>",methods=['PUT'])
 
 def modificarMesa(id):
     data = request.get_json()
@@ -39,7 +41,7 @@ def modificarMesa(id):
 def eliminarMesa(id):
     json=ControladorMesa.delete(id)
     return jsonify(json)
-"""
+
 @app.route("/saludo/",methods=['POST'])
 
 def creacionMesa():
@@ -57,8 +59,6 @@ def creacionMesa():
 def creacionCandidato():
     resultado = ControladorCandidato.creacionCandidato()
     return {"resultado":resultado}
-
-"""
 
 def loadFileConfig():
     with open('config.json') as f:
