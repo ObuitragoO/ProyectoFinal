@@ -1,23 +1,22 @@
 class ControladorCandidato():
 
     def __init__(self):
-        print("Entro al constructor de la clase controlador del Candidato")
+        print("Entró al constructor de la clase ControladorDepartamento")
 
-    def crearCandidato(self):
-        print("logica de crear Candidato")
+    def crearDepartamento(self, bodyRequest):
+        print("Creando el departamento....")
+        departamento = ModeloDepartamento(bodyRequest)
+        print("departamento a crear en base de datos: ", departamento.__dict__)
         return True
 
-    def index(self):
-        print("Listar todos los candidatos ")
+    def buscarDepartamento(self, idDepartamento):
+        print("Buscando el departamento....", idDepartamento)
+        return True
 
-    def create(self, elCandidato):
-        print("Crear un Candidato")
+    def actualizarDepartamento(self, departamento):
+        print("Actualizando el departamento....", departamento)
+        return True
 
-    def show(self, id):
-        print("Mostrando un Candidato con id ", id)
-
-    def update(self, id, elCandidato):
-        print("Actualizando Candidato con id ", id)
-
-    def delete(self, id):
-        print("Elimiando candidato con id ", id)
+    def eliminarDepartamento(self, departamento):
+        print("Eliminando el departamento....", departamento)
+        return True
