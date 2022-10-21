@@ -1,6 +1,12 @@
 from repositorios.RepositorioMesa import RepositorioMesa
 from Modelos.Mesa import Mesa
 
+
+"""
+cofigo que se conecta con el repositorio 
+para hacer el crud
+"""
+
 class ControladorMesa():
     def __init__(self):
         print("Entró al constructor de la clase Controlador Mesa")

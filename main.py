@@ -12,9 +12,8 @@ cors = CORS(app)
 
 controladorMesa = ControladorMesa()
 """ControladorCandidato = ControladorCandidato()"""
-"""test"""
 
-
+""" APP ROUTE MESA """
 @app.route("/", methods=['GET'])
 def test():
     json = {}
@@ -69,37 +68,6 @@ def eliminarEstudiante(idObject):
 
 
 
-
-
-
-
-
-
-
-
-
-
-"""
-
-@app.route("/saludo/",methods=['POST'])
-
-def creacionMesa():
-    getJsonO = request.get_json()
-    print("el Body ",getJsonO)
-    hostJson = request.host
-    resultado = ControladorMesa.crearMesa()
-    if(resultado):
-        return {"resultado":"La Mesa se creo ok "}
-    else:
-        return {"resultado":"fallo"}
-
-@app.route("/dos/",methods=['POST'])
-
-def creacionCandidato():
-    resultado = ControladorCandidato.creacionCandidato()
-    return {"resultado":resultado}
-
-"""
 
 def loadFileConfig():
     with open('config.json') as f:
