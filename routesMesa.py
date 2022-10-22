@@ -17,15 +17,15 @@ def crearMesa():
     print("Request body: ", requestBody)
     result = controladorMesa.crearMesa(requestBody)
     if result:
-        return {"resultado": "Mesa Creada!"}
+        return {"Resultado": "Mesa Creada!"}
     else:
-        return {"resultado": "Error al crear la Mesa!"}
+        return {"Resultado": "Error al crear la Mesa!"}
 
 @app.route("/mesa/<string:idObject>", methods=['GET'])
 def buscarMesa(idObject):
     result = controladorMesa.buscarMesa(idObject)
     if result is None:
-        return {"resultado": "No se encuentra la mesa en base de datos!"}
+        return {"Resultado": "No se encuentra la mesa en base de datos!"}
     else:
         return jsonify(result)
 
@@ -33,7 +33,7 @@ def buscarMesa(idObject):
 def buscarTodasLasMesas():
     result = controladorMesa.buscarTodasLasMesas()
     if not result:
-        return {"resultado": "No se encuentran mesas en la base de datos!"}
+        return {"Resultado": "No se encuentran mesas en la base de datos!"}
     else:
         return jsonify(result)
 
@@ -43,16 +43,16 @@ def actualizarMesa():
     print("Request body: ", requestBody)
     result = controladorMesa.actualizarMesas(requestBody)
     if result:
-        return {"resultado": "Mesa actualizada!"}
+        return {"Resultado": "Mesa actualizada!"}
     else:
-        return {"resultado": "Error al actualizar el Mesa!"}
+        return {"Resultado": "Error al actualizar el Mesa!"}
 
 @app.route("/mesa/<string:idObject>", methods=['DELETE'])
 def eliminarEstudiante(idObject):
     result = controladorMesa.eliminarMesa(idObject)
     if result:
-        return {"resultado": "Mesa eliminada!"}
+        return {"Resultado": "Mesa eliminada!"}
     else:
-        return {"resultado": "Error al eliminar la Mesa!"}
+        return {"Resultado": "Error al eliminar la Mesa!"}
 
 

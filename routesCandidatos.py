@@ -16,15 +16,15 @@ def crearCandidato():
     print("Request body: ", requestBody)
     result = controladorCandidato.crearCandidato(requestBody)
     if result:
-        return {"resultado": "Candidato Creado!"}
+        return {"Resultado": "Candidato Creado!"}
     else:
-        return {"resultado": "Error al crear el candidato llamar a TI!"}
+        return {"Resultado": "Error al crear el candidato llamar a TI!"}
 
 @app.route("/candidato/<string:idObject>", methods=['GET'])
 def buscarCandidato(idObject):
     result = controladorCandidato.buscarCandidato(idObject)
     if result is None:
-        return {"resultado": "No se encuentra el candidato en base de datos!"}
+        return {"Resultado": "No se encuentra el candidato en base de datos!"}
     else:
         return jsonify(result)
 
@@ -32,7 +32,7 @@ def buscarCandidato(idObject):
 def buscarTodasLosCandidatos():
     result = controladorCandidato.buscarTodosLosCandidatos()
     if not result:
-        return {"resultado": "No se encuentran candidatos en la base de datos!"}
+        return {"Resultado": "No se encuentran candidatos en la base de datos!"}
     else:
         return jsonify(result)
 
@@ -42,15 +42,15 @@ def actualizarCandidato():
     print("Request body: ", requestBody)
     result = controladorCandidato.actualizarCandidato(requestBody)
     if result:
-        return {"resultado": "Candidato actualizado!"}
+        return {"Resultado": "Candidato actualizado!"}
     else:
-        return {"resultado": "Error al actualizar el Candidato!"}
+        return {"Resultado": "Error al actualizar el Candidato!"}
 
 @app.route("/candidato/<string:idObject>", methods=['DELETE'])
 def eliminarCandidato(idObject):
     result = controladorCandidato.eliminarCandidato(idObject)
     if result:
-        return {"resultado": "Candidato eliminada!"}
+        return {"Resultado": "Candidato eliminada!"}
     else:
-        return {"resultado": "Error al eliminar la candidato!"}
+        return {"Resultado": "Error al eliminar el candidato!"}
 
