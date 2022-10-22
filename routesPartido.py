@@ -17,15 +17,15 @@ def crearPartido():
     print("Request body: ", requestBody)
     result = controladorPartido.crearPartido(requestBody)
     if result:
-        return {"resultado": "partido Creado!"}
+        return {"Resultado": "Partido Creado!"}
     else:
-        return {"resultado": "Error al crear el Partido!"}
+        return {"Resultado": "Error al crear el Partido!"}
 
 @app.route("/partido/<string:idObject>", methods=['GET'])
 def buscarPartido(idObject):
     result = controladorPartido.buscarPartido(idObject)
     if result is None:
-        return {"resultado": "No se encuentra el partido en base de datos!"}
+        return {"Resultado": "No se encuentra el partido en base de datos!"}
     else:
         return jsonify(result)
 
@@ -33,7 +33,7 @@ def buscarPartido(idObject):
 def buscarTodosLosPartidos():
     result = controladorPartido.buscarTodosLosPartidos()
     if not result:
-        return {"resultado": "No se encuentran partidos en la base de datos!"}
+        return {"Resultado": "No se encuentran partidos en la base de datos!"}
     else:
         return jsonify(result)
 
@@ -43,16 +43,16 @@ def actualizarPartido():
     print("Request body: ", requestBody)
     result = controladorPartido.actualizarPartido(requestBody)
     if result:
-        return {"resultado": "partido actualizado!"}
+        return {"Resultado": "Partido actualizado!"}
     else:
-        return {"resultado": "Error al actualizar el partido!"}
+        return {"Resultado": "Error al actualizar el partido!"}
 
 @app.route("/partido/<string:idObject>", methods=['DELETE'])
 def eliminarPartido(idObject):
     result = controladorPartido.eliminarPartido(idObject)
     if result:
-        return {"resultado": "partido eliminado!"}
+        return {"Resultado": "Partido eliminado!"}
     else:
-        return {"resultado": "Error al eliminar el partido!"}
+        return {"Resultado": "Error al eliminar el partido!"}
 
 
