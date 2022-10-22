@@ -2,11 +2,6 @@ from repositorios.RepositorioMesa import RepositorioMesa
 from Modelos.Mesa import Mesa
 
 
-"""
-cofigo que se conecta con el repositorio 
-para hacer el crud
-"""
-
 class ControladorMesa():
     def __init__(self):
         print("Entró al constructor de la clase Controlador Mesa")
@@ -15,7 +10,7 @@ class ControladorMesa():
     def crearMesa(self, bodyRequest):
         print("Creando el estudiante....")
         nuevaMesa = Mesa(bodyRequest)
-        print("estudiante a crear en base de datos: ", nuevaMesa.__dict__)
+        print("Mesa a crear en base de datos: ", nuevaMesa.__dict__)
         self.repositorioMesa.save(nuevaMesa)
         return True
 
@@ -31,9 +26,8 @@ class ControladorMesa():
     def actualizarMesas(self, vmesa):
         mesaActual = Mesa(self.repositorioMesa.findById(vmesa["idObject"]))
         print("Actualizando el estudiante....", mesaActual)
-        mesaActual.nombre = vmesa["nombre"]
-        mesaActual.apellido = vmesa["apellido"]
-        mesaActual.cedula = vmesa["cedula"]
+        mesaActual.numero = vmesa["numero"]
+        mesaActual.cantidad_inscritos = vmesa["cantidad_inscritos"]
         self.repositorioMesa.save(mesaActual)
         return True
 

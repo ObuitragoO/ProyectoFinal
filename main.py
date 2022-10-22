@@ -5,70 +5,22 @@ from flask_cors import CORS
 import json
 from waitress import serve
 
-from Controladores.ControladorMesa import ControladorMesa
-from Controladores.ControladorCandidato import ControladorCandidato
 app = Flask(__name__)
 cors = CORS(app)
 
-controladorMesa = ControladorMesa()
-"""ControladorCandidato = ControladorCandidato()"""
+import routesCandidatos
+import routesMesa
+import routesPartido
+import routesResultado
 
-""" APP ROUTE MESA """
+""" APP ROUTE PRINCIPAL"""
 @app.route("/", methods=['GET'])
 def test():
     json = {}
     json["message"] = "Server running mision tic 2022 final..."
     return jsonify(json)
 
-
-#Registro de endpoints para las funcionalidades de estudiante
-@app.route("/mesa", methods=['POST'])
-def crearMesa():
-    requestBody = request.get_json()
-    print("Request body: ", requestBody)
-    result = controladorMesa.crearMesa(requestBody)
-    if result:
-        return {"resultado": "Mesa Creada!"}
-    else:
-        return {"resultado": "Error al crear la Mesa!"}
-
-@app.route("/mesa/<string:idObject>", methods=['GET'])
-def buscarMesa(idObject):
-    result = controladorMesa.buscarMesa(idObject)
-    if result is None:
-        return {"resultado": "No se encuentra la mesa en base de datos!"}
-    else:
-        return jsonify(result)
-
-@app.route("/mesa", methods=['GET'])
-def buscarTodasLasMesas():
-    result = controladorMesa.buscarTodasLasMesas()
-    if not result:
-        return {"resultado": "No se encuentran mesas en la base de datos!"}
-    else:
-        return jsonify(result)
-
-@app.route("/mesa", methods=['PUT'])
-def actualizarMesa():
-    requestBody = request.get_json()
-    print("Request body: ", requestBody)
-    result = controladorMesa.actualizarMesas(requestBody)
-    if result:
-        return {"resultado": "Mesa actualizada!"}
-    else:
-        return {"resultado": "Error al actualizar el Mesa!"}
-
-@app.route("/mesa/<string:idObject>", methods=['DELETE'])
-def eliminarEstudiante(idObject):
-    result = controladorMesa.eliminarMesa(idObject)
-    if result:
-        return {"resultado": "Mesa eliminada!"}
-    else:
-        return {"resultado": "Error al eliminar la Mesa!"}
-
-
-
-
+# conexiones
 def loadFileConfig():
     with open('config.json') as f:
         data = json.load(f)
