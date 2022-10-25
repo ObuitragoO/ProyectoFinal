@@ -51,9 +51,10 @@ class InterfaceRepositorio(Generic[T]):
     def deleteAll(self):
         laColeccion = self.baseDatos[self.coleccion]
         data = []
+        cuenta = 0
         for x in laColeccion.find():
             id = x["_id"].__str__()
-            cuenta = laColeccion.delete_one({"_id": ObjectId(id)}).deleted_count
+            cuenta = cuenta + laColeccion.delete_one({"_id": ObjectId(id)}).deleted_count
         return {"deleted_count": cuenta}
 
     def update(self, id, item: T):

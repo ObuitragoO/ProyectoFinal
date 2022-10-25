@@ -10,8 +10,8 @@ class ControladorResultado():
     def crearResultado(self, bodyRequest):
         print("Creando el Resultado....")
         nuevoResultado = Resultado(bodyRequest)
-        print("Partido a crear en base de datos: ", nuevoResultado.__dict__)
-        self.repositorioPartido.save(nuevoResultado)
+        print("Rersultado a crear en base de datos: ", nuevoResultado.__dict__)
+        self.repositorioResultado.save(nuevoResultado)
         return True
 
     def buscarResultado(self, idObject):
@@ -23,18 +23,19 @@ class ControladorResultado():
         print("Buscando todos los Partidos en la base de datos....")
         return self.repositorioResultado.findAll()
 
-    def actualizarResultado(self, vPartido):
-        ResultadoActual = Resultado(self.repositorioResultado.findById(vPartido["idObject"]))
+    def actualizarResultado(self, id, vPartido):
+        ResultadoActual = Resultado(self.repositorioResultado.findById(id))
         print("Actualizando el partido....", ResultadoActual)
-        ResultadoActual.id = vPartido["id"]
         ResultadoActual.numero_mesa = vPartido["numero_mesa"]
         ResultadoActual.cedula_candidato = vPartido["cedula_candidato"]
         ResultadoActual.numero_votos = vPartido["numero_votos"]
-        self.repositorioResultado.save(ResultadoActual)
-        return True
+        return self.repositorioResultado.save(ResultadoActual)
 
     def eliminarResultado(self, idObject):
         print("Eliminando el resultado....", idObject)
-        self.repositorioResultado.delete(idObject)
-        return True
+        return self.repositorioResultado.delete(idObject)
+
+    def eliminarTodosLosResultados(self):
+        print("Eliminando todas los Resultados....")
+        return self.repositorioResultado.deleteAll()
 

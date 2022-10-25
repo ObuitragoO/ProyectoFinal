@@ -69,7 +69,7 @@ def eliminarCandidatos():
         return {"Resultado": "No se encuentran candidatos en la base de datos!"}
     else:
         result = controladorCandidato.eliminarTodosLosCandidato()
-        print(result)
+        return result
 
 
 

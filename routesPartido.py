@@ -24,8 +24,10 @@ def crearPartido():
 @app.route("/partido/<string:idObject>", methods=['GET'])
 def buscarPartido(idObject):
     result = controladorPartido.buscarPartido(idObject)
-    if result is None:
-        return {"Resultado": "No se encuentra el partido en base de datos!"}
+    if result == {}:
+        result = {}
+        result["message"] = "No se encuentra ningun Partido para el Id en la Base de datos"
+        return jsonify(result)
     else:
         return jsonify(result)
 
@@ -37,22 +39,37 @@ def buscarTodosLosPartidos():
     else:
         return jsonify(result)
 
-@app.route("/pardio", methods=['PUT'])
-def actualizarPartido():
-    requestBody = request.get_json()
-    print("Request body: ", requestBody)
-    result = controladorPartido.actualizarPartido(requestBody)
-    if result:
-        return {"Resultado": "Partido actualizado!"}
+@app.route("/partido/<string:idObject>", methods=['PUT'])
+def actualizarPartido(idObject):
+    validacion = controladorPartido.buscarPartido(idObject)
+    if validacion == {}:
+        json = {}
+        json["message"] = "No se encuentra ningun Partido para el Id en la Base de datos"
+        return jsonify(json)
     else:
-        return {"Resultado": "Error al actualizar el partido!"}
+        data = request.get_json()
+        resultado = controladorPartido.actualizarPartido(idObject, data)
+        return jsonify(resultado)
 
 @app.route("/partido/<string:idObject>", methods=['DELETE'])
 def eliminarPartido(idObject):
-    result = controladorPartido.eliminarPartido(idObject)
-    if result:
-        return {"Resultado": "Partido eliminado!"}
+    validacion = controladorPartido.buscarPartido(idObject)
+    if validacion == {}:
+        json = {}
+        json["message"] = "No se encuentra ningun Partido para el Id en la Base de datos"
+        return jsonify(json)
     else:
-        return {"Resultado": "Error al eliminar el partido!"}
+        data = request.get_json()
+        result = controladorPartido.eliminarPartido(idObject)
+        return jsonify(result)
 
+@app.route("/partido/All", methods=['DELETE'])
+def eliminarTodosLosPartidos():
+    validacion = controladorPartido.buscarTodosLosPartidos()
+    if validacion == []:
+        json = {}
+        return {"Resultado": "No se encuentran Partidos en la base de datos!"}
+    else:
+        result = controladorPartido.eliminarTodosLosPartidos()
+        return result
 

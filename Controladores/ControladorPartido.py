@@ -22,16 +22,18 @@ class ControladorPartido():
         print("Buscando todos los Partidos en la base de datos....")
         return self.repositorioPartido.findAll()
 
-    def actualizarPartido(self, vPartido):
-        partidoActual = Partido(self.repositorioPartido.findById(vPartido["idObject"]))
+    def actualizarPartido(self, id, vPartido):
+        partidoActual = Partido(self.repositorioPartido.findById(id))
         print("Actualizando el Partido....", partidoActual)
-        partidoActual.id = vPartido["id"]
         partidoActual.nombre = vPartido["nombre"]
         partidoActual.lema = vPartido["lema"]
-        self.repositorioPartido.save(partidoActual)
-        return True
+        return self.repositorioPartido.save(partidoActual)
 
     def eliminarPartido(self, idObject):
         print("Eliminando el partido....", idObject)
-        self.repositorioPartido.delete(idObject)
-        return True
+        return self.repositorioPartido.delete(idObject)
+
+
+    def eliminarTodosLosPartidos(self):
+        print("Eliminando todas los Partidos....")
+        return self.repositorioPartido.deleteAll()

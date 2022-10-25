@@ -24,8 +24,10 @@ def crearMesa():
 @app.route("/mesa/<string:idObject>", methods=['GET'])
 def buscarMesa(idObject):
     result = controladorMesa.buscarMesa(idObject)
-    if result is None:
-        return {"Resultado": "No se encuentra la mesa en base de datos!"}
+    if result == {}:
+        result = {}
+        result["message"] = "No se encuentra ninguna Mesa para el Id en la Base de datos"
+        return jsonify(result)
     else:
         return jsonify(result)
 
@@ -37,22 +39,38 @@ def buscarTodasLasMesas():
     else:
         return jsonify(result)
 
-@app.route("/mesa", methods=['PUT'])
-def actualizarMesa():
-    requestBody = request.get_json()
-    print("Request body: ", requestBody)
-    result = controladorMesa.actualizarMesas(requestBody)
-    if result:
-        return {"Resultado": "Mesa actualizada!"}
+@app.route("/mesa/<string:idObject>", methods=['PUT'])
+def actualizarMesa(idObject):
+    validacion = controladorMesa.buscarMesa(idObject)
+    if validacion == {}:
+        json = {}
+        json["message"] = "No se encuentra ninguna Mesa para el Id en la Base de datos"
+        return jsonify(json)
     else:
-        return {"Resultado": "Error al actualizar el Mesa!"}
+        data = request.get_json()
+        resultado = controladorMesa.actualizarMesas(idObject, data)
+        return jsonify(resultado)
 
 @app.route("/mesa/<string:idObject>", methods=['DELETE'])
-def eliminarEstudiante(idObject):
-    result = controladorMesa.eliminarMesa(idObject)
-    if result:
-        return {"Resultado": "Mesa eliminada!"}
+def eliminarMesa(idObject):
+    validacion = controladorMesa.buscarMesa(idObject)
+    if validacion == {}:
+        json = {}
+        json["message"] = "No se encuentra ninguna Mesa para el Id en la Base de datos"
+        return jsonify(json)
     else:
-        return {"Resultado": "Error al eliminar la Mesa!"}
+        data = request.get_json()
+        result = controladorMesa.eliminarMesa(idObject)
+        return jsonify(result)
+
+@app.route("/mesa/All", methods=['DELETE'])
+def eliminarTodasLasmesas():
+    validacion = controladorMesa.buscarTodasLasMesas()
+    if validacion == []:
+        json = {}
+        return {"Resultado": "No se encuentran mesas en la base de datos!"}
+    else:
+        result = controladorMesa.eliminarTodasLasMesas()
+        return result
 
 
