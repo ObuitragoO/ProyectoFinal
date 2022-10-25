@@ -48,6 +48,14 @@ class InterfaceRepositorio(Generic[T]):
         cuenta = laColeccion.delete_one({"_id": ObjectId(id)}).deleted_count
         return {"deleted_count": cuenta}
 
+    def deleteAll(self):
+        laColeccion = self.baseDatos[self.coleccion]
+        data = []
+        for x in laColeccion.find():
+            id = x["_id"].__str__()
+            cuenta = laColeccion.delete_one({"_id": ObjectId(id)}).deleted_count
+        return {"deleted_count": cuenta}
+
     def update(self, id, item: T):
         _id = ObjectId(id)
         laColeccion = self.baseDatos[self.coleccion]
@@ -59,12 +67,13 @@ class InterfaceRepositorio(Generic[T]):
 
     def findById(self, id):
         laColeccion = self.baseDatos[self.coleccion]
-        x = laColeccion.find_one({"_id": ObjectId(id)})
-        x = self.getValuesDBRef(x)
-        if x == None:
-            x = {}
-        else:
+        try:
+            x = laColeccion.find_one({"_id": ObjectId(id)})
+            x = self.getValuesDBRef(x)
             x["_id"] = x["_id"].__str__()
+            print(x)
+        except:
+            x = {}
         return x
 
 
