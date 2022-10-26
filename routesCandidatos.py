@@ -4,11 +4,12 @@ from flask import request
 from flask_cors import CORS
 import json
 from waitress import serve
-
-from Controladores.ControladorCandidato import ControladorCandidato
 from __main__ import app
 
+from Controladores.ControladorCandidato import ControladorCandidato
 controladorCandidato = ControladorCandidato()
+from Controladores.ControladorPartido import ControladorPartido
+controladorPartido = ControladorPartido ()
 
 @app.route("/candidato", methods=['POST'])
 def crearCandidato():
@@ -71,5 +72,15 @@ def eliminarCandidatos():
         result = controladorCandidato.eliminarTodosLosCandidato()
         return result
 
+@app.route("/candidato/<string:id>/partido/<string:id_partido>",methods=['PUT'])
+def asignarPartidoACandidato(id,id_partido):
+    validacion1 = controladorCandidato.buscarCandidato(id)
+    validacion2 = controladorPartido.buscarPartido(id_partido)
+    if validacion1 == {} or validacion2 == {}:
+        json = {}
+        return {"Resultado": "No se encuentran el Candidato o el Partido indicados"}
+    else:
+        json = controladorCandidato.asignarPartido(id, id_partido)
+        return jsonify(json)
 
 

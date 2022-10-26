@@ -10,7 +10,7 @@ from __main__ import app
 
 controladorPartido = ControladorPartido()
 
-# Registro de endpoints para las funcionalidades de Mesa
+# Registro de endpoints para las funcionalidades de partido
 @app.route("/partido", methods=['POST'])
 def crearPartido():
     requestBody = request.get_json()
