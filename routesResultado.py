@@ -4,24 +4,29 @@ from flask import request
 from flask_cors import CORS
 import json
 from waitress import serve
-
-from Controladores.ControladorResultado import ControladorResultado
 from __main__ import app
 
+from Controladores.ControladorResultado import ControladorResultado
 controladorResultado = ControladorResultado()
+from Controladores.ControladorCandidato import ControladorCandidato
+controladorCandidato = ControladorCandidato()
+from Controladores.ControladorMesa import ControladorMesa
+controladorMesa = ControladorMesa()
 
 
 # Registro de endpoints para las funcionalidades de Resultado
 
-@app.route("/resultado", methods=['POST'])
-def crearResultado():
-    requestBody = request.get_json()
-    print("Request body: ", requestBody)
-    result = controladorResultado.crearResultado(requestBody)
-    if result:
-        return {"resultado": "resultado Creado!"}
+@app.route("/resultado/candidato/<string:id_candidato>/mesa/<string:id_mesa>",methods=['POST'])
+def crearResultado(id_candidato,id_mesa):
+    validacion1 = controladorMesa.buscarMesa(id_mesa)
+    validacion2 = controladorCandidato.buscarCandidato(id_candidato)
+    if validacion1 == {} or validacion2 == {}:
+        json = {}
+        return {"Resultado": "No se encuentran la Mesa o el Candidato indicados"}
     else:
-        return {"resultado": "Error al crear el resultado!"}
+        data = request.get_json()
+        result = controladorResultado.crearResultado(data, id_candidato, id_mesa)
+        return jsonify(result)
 
 @app.route("/resultado/<string:idObject>", methods=['GET'])
 def buscarResultado(idObject):
@@ -41,17 +46,18 @@ def buscarTodosLosResultados():
     else:
         return jsonify(result)
 
-@app.route("/resultado/<string:idObject>", methods=['PUT'])
-def actualizarResultado(idObject):
-    validacion = controladorResultado.buscarResultado(idObject)
-    if validacion == {}:
+@app.route("/resultado/<string:id_resultado>/candidato/<string:id_candidato>/mesa/<string:id_mesa>",methods=['PUT'])
+def actualizarResultado(id_resultado,id_candidato,id_mesa):
+    validacion1 = controladorResultado.buscarResultado(id_resultado)
+    validacion2 = controladorMesa.buscarMesa(id_mesa)
+    validacion3 = controladorCandidato.buscarCandidato(id_candidato)
+    if validacion1 == {} or validacion2 == {} or validacion3 == {}:
         json = {}
-        json["message"] = "No se encuentra ningun Resultado para el Id en la Base de datos"
-        return jsonify(json)
+        return {"Resultado": "No se encuentran los datos indicados indicados"}
     else:
         data = request.get_json()
-        resultado = controladorResultado.actualizarResultado(idObject, data)
-        return jsonify(resultado)
+        json=controladorResultado.actualizarResultado(id_resultado,data,id_candidato,id_mesa)
+        return jsonify(json)
 
 @app.route("/resultado/<string:idObject>", methods=['DELETE'])
 def eliminarResultado(idObject):

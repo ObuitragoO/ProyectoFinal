@@ -1,5 +1,5 @@
+from Modelos.Partido import Partido
 from repositorios.RepositorioPartido import RepositorioPartido
-from Modelos.partido import partido
 class ControladorPartido():
 
     def __init__(self):
@@ -8,7 +8,7 @@ class ControladorPartido():
 
     def crearPartido(self, bodyRequest):
         print("Creando el Partido....")
-        nuevoPartido = partido(bodyRequest)
+        nuevoPartido = Partido(bodyRequest)
         print("Partido a crear en base de datos: ", nuevoPartido.__dict__)
         self.repositorioPartido.save(nuevoPartido)
         return True
@@ -24,7 +24,7 @@ class ControladorPartido():
 
     def actualizarPartido(self, id, vPartido):
         partidoActual = Partido(self.repositorioPartido.findById(id))
-        print("Actualizando el Partido....", partidoActual)
+        print("Actualizando el Partido....", vPartido)
         partidoActual.nombre = vPartido["nombre"]
         partidoActual.lema = vPartido["lema"]
         return self.repositorioPartido.save(partidoActual)

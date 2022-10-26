@@ -17,9 +17,7 @@ class InterfaceRepositorio(Generic[T]):
         client = pymongo.MongoClient(dataConfig["data-db-connection"], tlsCAFile=ca)
         self.baseDatos = client[dataConfig["name-db"]]
         theClass = get_args(self.__orig_bases__[0])
-        print(theClass)
         self.coleccion = theClass[0].__name__.lower()
-        print(self.coleccion)
 
     def loadFileConfig(self):
         with open('config.json') as f:
@@ -27,10 +25,7 @@ class InterfaceRepositorio(Generic[T]):
         return data
 
     def save(self, item: T):
-        print(item)
         laColeccion = self.baseDatos[self.coleccion]
-        print(laColeccion)
-        print()
         elId = ""
         item = self.transformRefs(item)
         if hasattr(item, "_id") and item._id != "":
