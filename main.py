@@ -8,9 +8,9 @@ from waitress import serve
 app = Flask(__name__)
 cors = CORS(app)
 
-import routesCandidatos
-import routesMesa
 import routesPartido
+import routesMesa
+import routesCandidatos
 import routesResultado
 
 """ APP ROUTE PRINCIPAL"""
