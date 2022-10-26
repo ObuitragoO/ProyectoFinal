@@ -23,17 +23,20 @@ class ControladorCandidato():
         return self.repositorioCandidato.findAll()
 
 
-    def actualizarCandidato(self, vCandidato):
-        candidatoActual = Candidato(self.repositorioCandidato.findById(vCandidato["idObject"]))
+    def actualizarCandidato(self, id, vCandidato):
+        candidatoActual = Candidato(self.repositorioCandidato.findById(id))
         print("Actualizando el candidato....", candidatoActual)
         candidatoActual.cedula = vCandidato["cedula"]
         candidatoActual.numero_resolucion = vCandidato["numero_resolucion"]
         candidatoActual.nombre = vCandidato["nombre"]
         candidatoActual.apellido = vCandidato["apellido"]
-        self.repositorioCandidato.save(candidatoActual)
-        return True
+        return self.repositorioCandidato.save(candidatoActual)
 
     def eliminarCandidato(self, idObject):
         print("Eliminando el candidato....", idObject)
-        self.repositorioCandidato.delete(idObject)
-        return True
+        return self.repositorioCandidato.delete(idObject)
+
+    def eliminarTodosLosCandidato(self):
+        print("Eliminando todos los candidato....")
+        return self.repositorioCandidato.deleteAll()
+

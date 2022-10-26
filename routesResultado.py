@@ -26,8 +26,10 @@ def crearResultado():
 @app.route("/resultado/<string:idObject>", methods=['GET'])
 def buscarResultado(idObject):
     result = controladorResultado.buscarResultado(idObject)
-    if result is None:
-        return {"resultado": "No se encuentra el resultado en base de datos!"}
+    if result == {}:
+        result = {}
+        result["message"] = "No se encuentra ningun Resultado para el Id en la Base de datos"
+        return jsonify(result)
     else:
         return jsonify(result)
 
@@ -35,24 +37,40 @@ def buscarResultado(idObject):
 def buscarTodosLosResultados():
     result = controladorResultado.buscarTodosLosResultados()
     if not result:
-        return {"resultado": "No se encuentran resultado en la base de datos!"}
+        return {"resultado": "No se encuentran Resultados en la base de datos!"}
     else:
         return jsonify(result)
 
-@app.route("/resultado", methods=['PUT'])
-def actualizarResultado():
-    requestBody = request.get_json()
-    print("Request body: ", requestBody)
-    result = controladorResultado.actualizarResultado(requestBody)
-    if result:
-        return {"resultado": "resultado actualizado!"}
+@app.route("/resultado/<string:idObject>", methods=['PUT'])
+def actualizarResultado(idObject):
+    validacion = controladorResultado.buscarResultado(idObject)
+    if validacion == {}:
+        json = {}
+        json["message"] = "No se encuentra ningun Resultado para el Id en la Base de datos"
+        return jsonify(json)
     else:
-        return {"resultado": "Error al actualizar el resultado!"}
+        data = request.get_json()
+        resultado = controladorResultado.actualizarResultado(idObject, data)
+        return jsonify(resultado)
 
 @app.route("/resultado/<string:idObject>", methods=['DELETE'])
 def eliminarResultado(idObject):
-    result = controladorResultado.eliminarResultado(idObject)
-    if result:
-        return {"resultado": "resultado eliminado!"}
+    validacion = controladorResultado.buscarResultado(idObject)
+    if validacion == {}:
+        json = {}
+        json["message"] = "No se encuentra ningun Resultado para el Id en la Base de datos"
+        return jsonify(json)
     else:
-        return {"resultado": "Error al eliminar el resultado!"}
+        data = request.get_json()
+        result = controladorResultado.eliminarResultado(idObject)
+        return jsonify(result)
+
+@app.route("/resultado/All", methods=['DELETE'])
+def eliminarTodosLosResultados():
+    validacion = controladorResultado.buscarTodosLosResultados()
+    if validacion == []:
+        json = {}
+        return {"Resultado": "No se encuentran Resultados en la base de datos!"}
+    else:
+        result = controladorResultado.eliminarTodosLosResultados()
+        return result

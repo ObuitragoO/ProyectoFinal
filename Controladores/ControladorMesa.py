@@ -23,15 +23,18 @@ class ControladorMesa():
         print("Buscando todos las Mesas en base de datos....")
         return self.repositorioMesa.findAll()
 
-    def actualizarMesas(self, vmesa):
-        mesaActual = Mesa(self.repositorioMesa.findById(vmesa["idObject"]))
+    def actualizarMesas(self, id, vmesa):
+        mesaActual = Mesa(self.repositorioMesa.findById(id))
         print("Actualizando el estudiante....", mesaActual)
         mesaActual.numero = vmesa["numero"]
         mesaActual.cantidad_inscritos = vmesa["cantidad_inscritos"]
-        self.repositorioMesa.save(mesaActual)
-        return True
+        return self.repositorioMesa.save(mesaActual)
 
     def eliminarMesa(self, idObject):
         print("Eliminando el mesa....", idObject)
-        self.repositorioMesa.delete(idObject)
-        return True
+        return self.repositorioMesa.delete(idObject)
+
+
+    def eliminarTodasLasMesas(self):
+        print("Eliminando todas las mesas....")
+        return self.repositorioMesa.deleteAll()

@@ -23,8 +23,10 @@ def crearCandidato():
 @app.route("/candidato/<string:idObject>", methods=['GET'])
 def buscarCandidato(idObject):
     result = controladorCandidato.buscarCandidato(idObject)
-    if result is None:
-        return {"Resultado": "No se encuentra el candidato en base de datos!"}
+    if result == {}:
+        result = {}
+        result["message"] = "No se encuentra ningun candidato para el Id en la Base de datos"
+        return jsonify(result)
     else:
         return jsonify(result)
 
@@ -36,21 +38,38 @@ def buscarTodasLosCandidatos():
     else:
         return jsonify(result)
 
-@app.route("/candidato", methods=['PUT'])
-def actualizarCandidato():
-    requestBody = request.get_json()
-    print("Request body: ", requestBody)
-    result = controladorCandidato.actualizarCandidato(requestBody)
-    if result:
-        return {"Resultado": "Candidato actualizado!"}
+@app.route("/candidato/<string:id>", methods=['PUT'])
+def actualizarCandidato(id):
+    validacion = controladorCandidato.buscarCandidato(id)
+    if validacion == {}:
+        json = {}
+        json["message"] = "No se encuentra ningun candidato para el Id en la Base de datos"
+        return jsonify(json)
     else:
-        return {"Resultado": "Error al actualizar el Candidato!"}
+        data = request.get_json()
+        resultado = controladorCandidato.actualizarCandidato(id, data)
+        return jsonify(resultado)
 
 @app.route("/candidato/<string:idObject>", methods=['DELETE'])
 def eliminarCandidato(idObject):
-    result = controladorCandidato.eliminarCandidato(idObject)
-    if result:
-        return {"Resultado": "Candidato eliminada!"}
+    validacion = controladorCandidato.buscarCandidato(idObject)
+    if validacion == {}:
+        json = {}
+        json["message"] = "No se encuentra ningun candidato para el Id en la Base de datos"
+        return jsonify(json)
     else:
-        return {"Resultado": "Error al eliminar el candidato!"}
+        data = request.get_json()
+        result = controladorCandidato.eliminarCandidato(idObject)
+        return jsonify(result)
+@app.route("/candidato/All", methods=['DELETE'])
+def eliminarCandidatos():
+    validacion = controladorCandidato.buscarTodosLosCandidatos()
+    if validacion == []:
+        json = {}
+        return {"Resultado": "No se encuentran candidatos en la base de datos!"}
+    else:
+        result = controladorCandidato.eliminarTodosLosCandidato()
+        return result
+
+
 
