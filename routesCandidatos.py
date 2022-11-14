@@ -59,7 +59,6 @@ def eliminarCandidato(idObject):
         json["message"] = "No se encuentra ningun candidato para el Id en la Base de datos"
         return jsonify(json)
     else:
-        data = request.get_json()
         result = controladorCandidato.eliminarCandidato(idObject)
         return jsonify(result)
 @app.route("/candidato/All", methods=['DELETE'])

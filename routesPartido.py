@@ -59,7 +59,6 @@ def eliminarPartido(idObject):
         json["message"] = "No se encuentra ningun Partido para el Id en la Base de datos"
         return jsonify(json)
     else:
-        data = request.get_json()
         result = controladorPartido.eliminarPartido(idObject)
         return jsonify(result)
 

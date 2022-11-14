@@ -59,7 +59,6 @@ def eliminarMesa(idObject):
         json["message"] = "No se encuentra ninguna Mesa para el Id en la Base de datos"
         return jsonify(json)
     else:
-        data = request.get_json()
         result = controladorMesa.eliminarMesa(idObject)
         return jsonify(result)
 
