@@ -67,7 +67,6 @@ def eliminarResultado(idObject):
         json["message"] = "No se encuentra ningun Resultado para el Id en la Base de datos"
         return jsonify(json)
     else:
-        data = request.get_json()
         result = controladorResultado.eliminarResultado(idObject)
         return jsonify(result)
 
