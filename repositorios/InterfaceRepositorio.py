@@ -76,6 +76,27 @@ class InterfaceRepositorio(Generic[T]):
         except:
             x = {}
         return x
+    def findByCedula(self, cedula):
+        laColeccion = self.baseDatos[self.coleccion]
+        try:
+            x = laColeccion.find_one({"cedula": (cedula)})
+            x = self.getValuesDBRef(x)
+            x["_id"] = x["_id"].__str__()
+            print(x)
+        except:
+            x = {}
+        return x
+
+    def findByNumero(self, numero):
+        laColeccion = self.baseDatos[self.coleccion]
+        try:
+            x = laColeccion.find_one({"numero": (numero)})
+            x = self.getValuesDBRef(x)
+            x["_id"] = x["_id"].__str__()
+            print(x)
+        except:
+            x = {}
+        return x
 
 
     def findAll(self):

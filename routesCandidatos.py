@@ -82,4 +82,14 @@ def asignarPartidoACandidato(id,id_partido):
         json = controladorCandidato.asignarPartido(id, id_partido)
         return jsonify(json)
 
-
+@app.route("/candidato/cedula/<string:cedula>", methods=['GET'])
+def buscarCandidatobyName(cedula):
+    print(cedula)
+    result = controladorCandidato.buscarCandidatobyCedula(cedula)
+    if result == {}:
+        result = {}
+        print(result)
+        return jsonify(result)
+    else:
+        print(result)
+        return jsonify(result)
