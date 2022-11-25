@@ -51,3 +51,7 @@ class ControladorCandidato():
         candidatoActual.partido = partidoActual
         return self.repositorioCandidato.save(candidatoActual)
 
+    def buscarCandidatobyCedula(self, cedula):
+        print("Buscando el Candidato....", cedula)
+        vCandidato = Candidato(self.repositorioCandidato.findByCedula(cedula))
+        return vCandidato.__dict__

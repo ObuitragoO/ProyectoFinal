@@ -72,4 +72,14 @@ def eliminarTodasLasmesas():
         result = controladorMesa.eliminarTodasLasMesas()
         return result
 
-
+@app.route("/mesa/numero/<string:numero>", methods=['GET'])
+def buscarMesaByNumero(numero):
+    print(numero)
+    result = controladorMesa.buscarMesabyNumero(numero)
+    if result == {}:
+        result = {}
+        print(result)
+        return jsonify(result)
+    else:
+        print(result)
+        return jsonify(result)

@@ -38,3 +38,8 @@ class ControladorMesa():
     def eliminarTodasLasMesas(self):
         print("Eliminando todas las mesas....")
         return self.repositorioMesa.deleteAll()
+
+    def buscarMesabyNumero(self, numero):
+        print("Buscando la mesa....", numero)
+        vMesa = Mesa(self.repositorioMesa.findByNumero(numero))
+        return vMesa.__dict__
